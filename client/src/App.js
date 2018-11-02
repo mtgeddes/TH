@@ -5,7 +5,7 @@ import FactoryChild from './components/FactoryChild';
 import axios from 'axios';
 import AddFactoryNode from './components/AddFactoryNode';
 
-class App extends Component {
+export default class App extends Component {
 
   state = {
     factoryNodes: [],
@@ -32,26 +32,26 @@ class App extends Component {
           <FactoryNode 
             key={node._id} 
             id={node._id} 
-            name={node.name}
-            min={node.range[0]}
+            name={node.name} 
+            min={node.range[0]} 
             max={node.range[1]}
           >
-          <ul>
-            {node.numbers.map((number, index) =>
-              <FactoryChild key={index} numbers={number} />
-            )}
-          </ul>
+            <ul>
+              {node.numbers.map((number, index) =>
+                <FactoryChild numbers={number} key={index}/>
+              )}
+            </ul>
           </FactoryNode>
         )}
-
-        
       </div>
     )
   }
+
 }
 
-export default App;
 
+// To do:
+// 1) Don't use index as keys for <FactoryChild />. 
 
 
 

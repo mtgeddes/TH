@@ -25,7 +25,7 @@ class AddFactoryNode extends Component {
     
   render() {
     return (
-      <div>
+      <React.Fragment>
         <form onSubmit={this.handleSubmit}>
           <label>
             Add a FactoryNode:
@@ -33,7 +33,7 @@ class AddFactoryNode extends Component {
           </label>
           <button type="submit">Add</button>
         </form>
-      </div>
+      </React.Fragment>
     )
   }   
 } 

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import InputBase from "@material-ui/core/InputBase";
 
-class FactoryNode extends Component {
+
+export default class FactoryNode extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -10,12 +12,11 @@ class FactoryNode extends Component {
       name: this.props.name,
       amount: null
     }
-    this.handleChange = this.handleChange.bind(this);
   }
 
 
   // Handles each input change
-  handleChange (event) {
+  handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -57,6 +58,7 @@ class FactoryNode extends Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
+        console.log(res.error);
       })
   }
 
@@ -70,7 +72,8 @@ class FactoryNode extends Component {
     axios.post(`/api/updateName`, { id, name })
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        console.log(res.data)
+        console.log(res.error);
       })
   }
 
@@ -89,27 +92,20 @@ class FactoryNode extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleRandomNumbersSubmit}>
-          <input type='text' name='amount' onChange={this.handleChange} ></input>
-          <button type="submit">Update Numbers</button>
-        </form>
-        <form onSubmit={this.handleNameUpdate}>
-          <input type='text' name='name' onChange={this.handleChange} value={this.state.name}></input>
-          <button type="submit">Update Name</button>
-        </form>
-        <form onSubmit={this.handleRangeSubmit}>
-          <input type='number' name='min' onChange={this.handleChange} value={this.state.min}></input>
-          <input type='number' name='max' onChange={this.handleChange} value={this.state.max}></input>
-          <button type="submit">Update Range</button>
-        </form>
-        <form onSubmit={this.handleDelete}>
-          <button type="submit">Delete FactoryNode</button>
-        </form>
+      <React.Fragment>
+
+        Item Count:
+        <InputBase type='text' name='amount' onChange={this.handleChange} />
+        <button onClick={this.handleRandomNumbersSubmit}>Generate</button>
+        <button onClick={this.handleDelete}>Delete</button>
+
+        <InputBase name='name' type='text' onBlur={this.handleNameUpdate} onChange={this.handleChange} defaultValue={this.state.name}/>
+        <InputBase name='min' type='text' onBlur={this.handleRangeSubmit} onChange={this.handleChange} defaultValue={this.state.min}/> 
+        <InputBase name='max' type='text' onBlur={this.handleRangeSubmit} onChange={this.handleChange} defaultValue={this.state.max}/> 
+
         {this.props.children}
-      </div>
+      </React.Fragment>
     )
   }   
 } 
 
-export default FactoryNode;

@@ -39,3 +39,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(port, () => console.log(`Server started on port ${port}`))
+
+// To do: 
+// 1) review to add to do items
+// 2) add socket.io
+// 3) Look up line 18 "...urlencoded({ extended: false }));   //<-----Do I need this?"
+// 4) Make sure deployment is set up right
