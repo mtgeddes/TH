@@ -26,13 +26,10 @@ class AddFactoryNode extends Component {
   render() {
     return (
       <React.Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Add a FactoryNode:
-            <input type="text" name="name" onChange={this.handleChange} />
-          </label>
-          <button type="submit">Add</button>
-        </form>
+        <div className='label'>       
+          Add a FactoryNode:<input type="text" className="input-add-node" name="name" onChange={this.handleChange} />
+          <button onClick={this.handleSubmit}>Add</button>
+        </div>
       </React.Fragment>
     )
   }   

@@ -4,6 +4,7 @@ import FactoryNode from './components/FactoryNode';
 import FactoryChild from './components/FactoryChild';
 import axios from 'axios';
 import AddFactoryNode from './components/AddFactoryNode';
+import "./components/FactoryNode.css"
 
 export default class App extends Component {
 
@@ -24,25 +25,24 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Root</h1>
-        <AddFactoryNode />
         <br/>
         <br/>
-        {this.state.factoryNodes.map(node => 
-          <FactoryNode 
-            key={node._id} 
-            id={node._id} 
-            name={node.name} 
-            min={node.range[0]} 
-            max={node.range[1]}
-          >
-            <ul>
-              {node.numbers.map((number, index) =>
-                <FactoryChild numbers={number} key={index}/>
-              )}
-            </ul>
-          </FactoryNode>
-        )}
+        <h1>Root     <AddFactoryNode /></h1>
+        <ul>
+          {this.state.factoryNodes.map(node => 
+            <FactoryNode 
+              key={node._id} 
+              id={node._id} 
+              name={node.name} 
+              min={node.range[0]} 
+              max={node.range[1]}
+            >
+            {node.numbers.map((number, index) =>
+              <FactoryChild key={index} numbers={number} />
+            )}
+            </FactoryNode>
+          )}
+        </ul>
       </div>
     )
   }

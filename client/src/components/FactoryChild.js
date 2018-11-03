@@ -2,9 +2,7 @@ import React from 'react';
 
 const FactoryChild = props => (
  
-  <li>
-    {props.numbers} 
-  </li>
+  <li><p>{props.numbers}</p></li>
 
 );
 

@@ -1,0 +1,118 @@
+
+
+* {
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+h1 {
+  background-color: rgb(37, 154, 226);
+  padding: 8px 25px 8px 25px;
+  color: white;
+}
+.range-numbers {
+  background-color: grey;
+  color: white;
+  cursor: text; 
+  line-height: 1.1875em; 
+  border: 0px;
+  border-radius: 25px;
+  width: 35px;
+  text-align: center;
+}
+
+.parent-node-actions {
+  background-color: rgb(228, 228, 228);
+  z-index: 1;
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  padding: 5px 0px 0px 30px;
+  margin-top: -5px;
+  margin-left: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.label {
+  font-size: 0.9em;
+  font-weight: lighter;
+  float: right;
+  position: relative;
+  top: -2px;
+}
+
+.input-add-node {
+  margin: 0px 15px 0px 15px;
+}
+
+.range-placement {
+  box-sizing: border-box;
+  background-color: grey;
+  border-radius: 25px;
+  color: white;
+  line-height: 1.1875em; 
+  min-width: 72px;
+  height: auto;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  top: 0px;
+}
+
+.input-name {
+  border: 0px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+ul, li { 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+
+ul { 
+  padding-left: 40px; 
+}
+
+li { 
+  padding-left: 1em;
+  border: 1px dotted black;
+  border-width: 0 0 1px 1px; 
+}
+
+li.container { 
+  border-bottom: 0px; 
+}
+
+li p { margin: 0;
+  background: white;
+  position: relative;
+  top: 0.5em; 
+}
+
+li ul { 
+  border-top: 1px dotted black; 
+  margin-left: -1em;     
+  padding-left: 2em; 
+}
+
+ul li:last-child ul {
+  border-left: 1px solid white;
+  margin-left: -17px;
+}
+
+
+/* To do: 
+ 1) Segement into other stylesheets relative to use
+ 2) organize styling
+ 3) rename file
+*/
