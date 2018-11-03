@@ -29,9 +29,9 @@ function arrayLimit(val) {
   return val.length <= 15;
 };
 
-// Makes sure only numbers and letters are used (no blank spaces).
+// Makes sure only numbers and letters are used.
 function alphaNumeric(val){
-  return /^[a-z0-9]+$/i.test(val);
+  return /^[a-z0-9 ]+$/i.test(val);
 };
 
 // Makes sure range min number is lower or equal to max number.

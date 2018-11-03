@@ -52,6 +52,7 @@ export default class App extends Component {
 
 // To do:
 // 1) Don't use index as keys for <FactoryChild />. 
+// 2) check for duplicate names before posting update to name
 
 
 

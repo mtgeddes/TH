@@ -8,7 +8,13 @@ class AddFactoryNode extends Component {
   }
 
   handleChange = event => {
-    this.setState({ name: event.target.value });
+    const re = /^[0-9a-zA-Z\b]+$/;
+
+    // if value is not blank, then test the regex
+
+    if (event.target.value === '' || re.test(event.target.value)) {
+      this.setState({ name: event.target.value });
+    }
   }
     
   handleSubmit = event => {
@@ -27,7 +33,7 @@ class AddFactoryNode extends Component {
     return (
       <React.Fragment>
         <div className='label'>       
-          Add a FactoryNode:<input type="text" className="input-add-node" name="name" onChange={this.handleChange} />
+          Add a FactoryNode:<input type="text" className="input-add-node" name="name" onChange={this.handleChange} value={this.state.name}/>
           <button onClick={this.handleSubmit}>Add</button>
         </div>
       </React.Fragment>
