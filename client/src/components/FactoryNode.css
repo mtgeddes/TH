@@ -41,6 +41,19 @@ h1 {
   display: block;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
+.generate {
+  padding: 5px 0px 5px 0px;
+}
+
+.delete {
+  border-top: 1px solid rgb(204, 204, 204);
+  padding-top: 5px;
+}
+
 .label {
   font-size: 0.9em;
   font-weight: lighter;

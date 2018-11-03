@@ -179,8 +179,8 @@ export default class FactoryNode extends Component {
           <div className={`parent-node-actions ${this.state.showOrHide}`}>
             Item Count:
             <input className={this.state.showOrHide} type='text' name='amount' onChange={this.handleChange} />
-            <button className={this.state.showOrHide} onClick={this.handleRandomNumbersSubmit}>Generate</button>
-            <button className={this.state.showOrHide} onClick={this.handleDelete}>Delete</button>
+            <div className={`cursor generate ${this.state.showOrHide}`} onClick={this.handleRandomNumbersSubmit}>Generate</div>
+            <div className={`delete cursor ${this.state.showOrHide}`} onClick={this.handleDelete}>Delete</div>
           </div>
 
             {this.props.children}
