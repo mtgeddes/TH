@@ -24,10 +24,6 @@ export default class App extends Component {
         console.log(this.state)
       })
 
-    // socket.on('connect', function (data) {
-    //   socket.emit('update-server', 'Client connected')
-    // })
-
     socket.on('update-client', factoryNodes => {
       console.log(factoryNodes)
       this.setState({ factoryNodes });

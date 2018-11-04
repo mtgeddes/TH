@@ -11,19 +11,24 @@ export default class FactoryNode extends Component {
     this.state = {
       min: this.props.min,
       max: this.props.max,
-      name: this.props.name,
+      name: this.props.name, //<-------
       amount: '',
       nameReadOnly: true,
       minReadOnly: true,
       maxReadOnly: true,
       showOrHide: 'hide',
       savedValues: [],
+      toggleState: true
     }
   }
 
   // Is currently saving initial values for reset upon not passing input validation
   componentDidMount = () => {
     this.setState( {savedValues: [this.state.min, this.state.max, this.state.name]})  
+    socket.on('update-client', factoryNodes => {
+      
+      this.setState({ factoryNodes });
+    });
   }
 
   // Handles each input change
@@ -52,13 +57,13 @@ export default class FactoryNode extends Component {
   handleReadOnly = event => {
 
     if (event.target.name === 'name') {
-      this.setState({ nameReadOnly: false })
+      this.setState({ nameReadOnly: false, toggleState: false })
     };
     if (event.target.name === 'min') {
-      this.setState({ minReadOnly: false })
+      this.setState({ minReadOnly: false, toggleState: false })
     };
     if (event.target.name === 'max') {
-      this.setState({ maxReadOnly: false })
+      this.setState({ maxReadOnly: false, toggleState: false })
     };
   };
 
@@ -130,6 +135,8 @@ export default class FactoryNode extends Component {
     const name = this.state.name
     const id = this.props.id
 
+    this.setState({ toggleState: true })
+
     if (!this.state.nameReadOnly) {
       axios.post(`/api/updateName`, { id, name })
       .then(res => {
@@ -171,8 +178,8 @@ export default class FactoryNode extends Component {
               onBlur={this.handleNameUpdate} 
               onChange={this.handleChange} 
               onClick={this.toggleActionsClassName}
-              value={this.state.name}
-            />         
+              value={this.state.toggleState ? this.props.name : this.state.name }   //<-----------
+            />        
             <p className='range-placement'>
               <input 
                 name='min' 
@@ -182,7 +189,7 @@ export default class FactoryNode extends Component {
                 onDoubleClick={this.handleReadOnly} 
                 onBlur={this.handleRangeSubmit} 
                 onChange={this.handleChange} 
-                value={this.state.min}
+                value={this.state.toggleState ? this.props.min : this.state.min}
               /> 
               {`:`}
               <input 
@@ -193,7 +200,7 @@ export default class FactoryNode extends Component {
                 onDoubleClick={this.handleReadOnly} 
                 onBlur={this.handleRangeSubmit} 
                 onChange={this.handleChange} 
-                value={this.state.max}
+                value={this.state.toggleState ? this.props.max : this.state.max}
               /> 
             </p>
           </p>
