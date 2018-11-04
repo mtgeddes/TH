@@ -25,7 +25,7 @@ export default class App extends Component {
       })
 
     socket.on('update-client', factoryNodes => {
-      console.log(factoryNodes)
+      console.log("factoryNodes")
       this.setState({ factoryNodes });
     });
   }

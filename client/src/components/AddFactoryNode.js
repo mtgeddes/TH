@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:5000')
+const socket = io('https://arcane-woodland-73099.herokuapp.com/')
 
 class AddFactoryNode extends Component {
     
@@ -14,7 +14,6 @@ class AddFactoryNode extends Component {
     const re = /^[0-9a-zA-Z\b]+$/;
 
     // if value is not blank, then test the regex
-
     if (event.target.value === '' || re.test(event.target.value)) {
       this.setState({ name: event.target.value });
     }
@@ -26,10 +25,7 @@ class AddFactoryNode extends Component {
   const name = this.state.name
 
   axios.post('/api/addNode', { name })
-    .then(res => {
-      console.log(res.data);
-      socket.emit('update-server', 'node added')
-    })
+    .then(() => socket.emit('update-server', 'node added'))
   }
     
   render() {
