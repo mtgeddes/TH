@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:5000')
 
 class AddFactoryNode extends Component {
     
@@ -24,8 +27,8 @@ class AddFactoryNode extends Component {
 
   axios.post('/api/addNode', { name })
     .then(res => {
-      console.log(res);
       console.log(res.data);
+      socket.emit('update-server', 'node added')
     })
   }
     

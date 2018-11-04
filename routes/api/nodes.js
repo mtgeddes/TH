@@ -6,7 +6,6 @@ const router = express.Router();
 const FactoryNode = require('../../models/FactoryNodeSchema');
 
 
-
 // @route   GET /api
 // @desc    get all items
 router.get('/', (req, res) => {

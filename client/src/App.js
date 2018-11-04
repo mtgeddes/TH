@@ -5,6 +5,9 @@ import FactoryChild from './components/FactoryChild';
 import axios from 'axios';
 import AddFactoryNode from './components/AddFactoryNode';
 import "./components/FactoryNode.css"
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:5000')
 
 export default class App extends Component {
 
@@ -13,13 +16,22 @@ export default class App extends Component {
     name: null
   }
 
-  componentDidMount() {
+  componentDidMount () {
     axios.get('/api')
       .then(res => {
         const factoryNodes = res.data
         this.setState({ factoryNodes });
         console.log(this.state)
       })
+
+    // socket.on('connect', function (data) {
+    //   socket.emit('update-server', 'Client connected')
+    // })
+
+    socket.on('update-client', factoryNodes => {
+      console.log(factoryNodes)
+      this.setState({ factoryNodes });
+    });
   }
 
   render() {

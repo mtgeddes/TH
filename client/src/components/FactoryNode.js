@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import "./FactoryNode.css"
+import "./FactoryNode.css";
+import io from 'socket.io-client'
 
+const socket = io('http://localhost:5000')
 
 export default class FactoryNode extends Component {
   constructor (props) {
@@ -15,13 +17,13 @@ export default class FactoryNode extends Component {
       minReadOnly: true,
       maxReadOnly: true,
       showOrHide: 'hide',
-      savedValues: []
+      savedValues: [],
     }
   }
 
   // Is currently saving initial values for reset upon not passing input validation
   componentDidMount = () => {
-    this.setState( {savedValues: [this.state.min, this.state.max, this.state.name]})
+    this.setState( {savedValues: [this.state.min, this.state.max, this.state.name]})  
   }
 
   // Handles each input change
@@ -90,6 +92,7 @@ export default class FactoryNode extends Component {
     .then(res => {
       console.log(res);
       console.log(res.data);
+      socket.emit('update-server', 'random numbers added')
     })
 
     if(this.state.showOrHide === 'show') {
@@ -113,9 +116,7 @@ export default class FactoryNode extends Component {
     if (!this.state.minReadOnly || !this.state.maxReadOnly) {
       axios.post(`/api/updateRange`, { id, range })
       .then(res => {
-        console.log(res);
-        console.log(res.data);
-        console.log(res.error);
+        socket.emit('update-server', 'min/max range updated')
         this.setState({ maxReadOnly: true, minReadOnly: true })
       })
     }
@@ -132,9 +133,7 @@ export default class FactoryNode extends Component {
     if (!this.state.nameReadOnly) {
       axios.post(`/api/updateName`, { id, name })
       .then(res => {
-        console.log(res);
-        console.log(res.data)
-        console.log(res.error);
+        socket.emit('update-server', 'name updated')
         this.setState({ nameReadOnly: true })
       })
     }
@@ -150,6 +149,7 @@ export default class FactoryNode extends Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
+        socket.emit('update-server', 'node deleted')
       })
 
     if(this.state.showOrHide === 'show') {
