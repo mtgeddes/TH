@@ -11,7 +11,7 @@ const
   routes = require('./routes/api/nodes'),
   port = process.env.PORT || 5000,
   db = require('./config/config').mongoURI;
-  FactoryNodeSchema = require('../TH/models/FactoryNodeSchema')
+  FactoryNodeSchema = require('./models/FactoryNodeSchema')
 
 // Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false }));   //<-----Do I need this?
