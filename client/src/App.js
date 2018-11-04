@@ -7,7 +7,7 @@ import AddFactoryNode from './components/AddFactoryNode';
 import "./components/FactoryNode.css"
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:5000')
+const socket = io('https://arcane-woodland-73099.herokuapp.com/')
 
 export default class App extends Component {
 
@@ -45,9 +45,9 @@ export default class App extends Component {
               min={node.range[0]} 
               max={node.range[1]}
             >
-            {node.numbers.map((number, index) =>
-              <FactoryChild key={index} numbers={number} />
-            )}
+              {node.numbers.map((number, index) =>
+                <FactoryChild key={index} numbers={number} />
+              )}
             </FactoryNode>
           )}
         </ul>

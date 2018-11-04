@@ -3,7 +3,7 @@ import axios from 'axios';
 import "./FactoryNode.css";
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:5000')
+const socket = io('https://arcane-woodland-73099.herokuapp.com/')
 
 export default class FactoryNode extends Component {
   constructor (props) {
@@ -11,7 +11,7 @@ export default class FactoryNode extends Component {
     this.state = {
       min: this.props.min,
       max: this.props.max,
-      name: this.props.name, //<-------
+      name: this.props.name, 
       amount: '',
       nameReadOnly: true,
       minReadOnly: true,
@@ -35,27 +35,28 @@ export default class FactoryNode extends Component {
   handleChange = event => {
     const re1 = /^[0-9\b]+$/;
     const re2 = /^[0-9a-zA-Z\b]+$/;
+    const eventName = event.target.name
 
-    if (event.target.name === 'amount' && event.target.value <= 15) {
+    if (eventName === 'amount' && event.target.value <= 15) {
       if (event.target.value === '' || re1.test(event.target.value)) {
         this.setState({ [event.target.name]: event.target.value });
       }
     } 
-    if (event.target.name === ('min' || 'max')) {
+    if (eventName === 'max' || eventName === 'min') {
       if (event.target.value === '' || re1.test(event.target.value)) {
         this.setState({ [event.target.name]: event.target.value });
       }
     } 
-    if (event.target.name === ('name')) {
+    if (eventName === ('name')) {
       if (event.target.value === '' || re2.test(event.target.value)) {
         this.setState({ [event.target.name]: event.target.value });
       }
     }
   }
 
-  // Changes to readonly false if true
+  // Changes the readonly value to 'false'. Also changes value's value  
+  // origination to be from state for input registry.  
   handleReadOnly = event => {
-
     if (event.target.name === 'name') {
       this.setState({ nameReadOnly: false, toggleState: false })
     };
@@ -117,12 +118,15 @@ export default class FactoryNode extends Component {
       return this.setState({ min: this.state.savedValues[0], max: this.state.savedValues[1] })
     }
 
-    // Only posts onBlur if readonly attribute on input is set to false preventing posts on unintentional onBlur events.
+    this.setState({ savedValues: [this.state.min, this.state.max, this.state.name ]})
+
+    // Only posts onBlur if readonly attribute on input is set 
+    // to false preventing posts on unintentional onBlur events.
     if (!this.state.minReadOnly || !this.state.maxReadOnly) {
       axios.post(`/api/updateRange`, { id, range })
-      .then(res => {
+      .then(() => {
         socket.emit('update-server', 'min/max range updated')
-        this.setState({ maxReadOnly: true, minReadOnly: true })
+        setTimeout(() =>  { this.setState({ maxReadOnly: true, minReadOnly: true, toggleState: true}) }, 1000)
       })
     }
 
@@ -178,7 +182,7 @@ export default class FactoryNode extends Component {
               onBlur={this.handleNameUpdate} 
               onChange={this.handleChange} 
               onClick={this.toggleActionsClassName}
-              value={this.state.toggleState ? this.props.name : this.state.name }   //<-----------
+              value={this.state.toggleState ? this.props.name : this.state.name }   
             />        
             <p className='range-placement'>
               <input 
