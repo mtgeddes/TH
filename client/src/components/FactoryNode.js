@@ -17,14 +17,14 @@ export default class FactoryNode extends Component {
       minReadOnly: true,
       maxReadOnly: true,
       showOrHide: 'hide',
-      savedValues: [],
-      toggleState: true
+      toggleState: true,
+      minContingency: '',
+      maxContingency: ''
     }
   }
 
   // Is currently saving initial values for reset upon not passing input validation
   componentDidMount = () => {
-    this.setState( {savedValues: [this.state.min, this.state.max, this.state.name]})  
     socket.on('update-client', factoryNodes => {
       
       this.setState({ factoryNodes });
@@ -35,23 +35,29 @@ export default class FactoryNode extends Component {
   handleChange = event => {
     const re1 = /^[0-9\b]+$/;
     const re2 = /^[0-9a-zA-Z\b]+$/;
-    const eventName = event.target.name
+    const name = event.target.name
+    const value = event.target.value
 
-    if (eventName === 'amount' && event.target.value <= 15) {
-      if (event.target.value === '' || re1.test(event.target.value)) {
-        this.setState({ [event.target.name]: event.target.value });
-      }
-    } 
-    if (eventName === 'max' || eventName === 'min') {
-      if (event.target.value === '' || re1.test(event.target.value)) {
-        this.setState({ [event.target.name]: event.target.value });
-      }
-    } 
-    if (eventName === ('name')) {
-      if (event.target.value === '' || re2.test(event.target.value)) {
-        this.setState({ [event.target.name]: event.target.value });
-      }
+    if (name === 'amount' && value <= 15 && (value === '' || re1.test(value))) {
+
+      this.setState({ [name]: value });
     }
+    
+    if (name === 'min' && (value === '' || re1.test(value))) {
+
+      this.setState({ [name]: value, minContingency: this.props.min });
+    } 
+
+    if (name === 'max' && (value === '' || re1.test(value))) {
+
+      this.setState({ [name]: value, maxContingency: this.props.max });
+    } 
+
+    if (name === ('name') && (value === '' || re2.test(value))) {
+      this.setState({ [name]: value });
+    }
+
+  
   }
 
   // Changes the readonly value to 'false'. Also changes value's value  
@@ -112,13 +118,18 @@ export default class FactoryNode extends Component {
     
     const range = [this.state.min, this.state.max]
     const id = this.props.id
+    const name = event.target.name
+    const value = event.target.value
 
     // If range is not set properly it will reset values
-    if (this.state.min > this.state.max) {
-      return this.setState({ min: this.state.savedValues[0], max: this.state.savedValues[1] })
+    if (name === 'max' && value < this.props.min) {
+      this.setState({ max: this.state.maxContingency })
+      return 
     }
-
-    this.setState({ savedValues: [this.state.min, this.state.max, this.state.name ]})
+    if (name === 'min' && value > this.props.max) {
+      this.setState({ min: this.state.minContingency })
+      return 
+    }
 
     // Only posts onBlur if readonly attribute on input is set 
     // to false preventing posts on unintentional onBlur events.
