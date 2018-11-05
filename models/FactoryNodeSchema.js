@@ -13,7 +13,7 @@ function alphaNumeric(val){
 
 // Makes sure range min number is lower or equal to max number.
 function greaterThan(val) {
-  return val[0] <= val[1]
+  return val[0] <= val[1];
 };
 
 // Create Schema
@@ -39,10 +39,8 @@ const FactoryNodeSchema = new Schema({
     }
 });
 
+module.exports = FactoryNode = mongoose.model('FactoryNode', FactoryNodeSchema);
+
 
 // To do: 
-// 1) Make sure name isn't already taken. Not a requirement of
-//    assignment per instructions, but useful when scaling. 
-// 2) Clean up error messages to more clear and concise. 
-
-module.exports = FactoryNode = mongoose.model('FactoryNode', FactoryNodeSchema);
+// 1) Clean up error messages to more clear and concise. 
