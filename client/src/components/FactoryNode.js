@@ -23,12 +23,16 @@ export default class FactoryNode extends Component {
     }
   }
 
-  // Is currently saving initial values for reset upon not passing input validation
+  // 
   componentDidMount = () => {
-    socket.on('update-client', factoryNodes => {
+    socket.on('update-client', () => {
       
-      this.setState({ factoryNodes });
-    });
+      setTimeout(() => {
+        console.log("check this value here: " + this.props.min)
+        this.setState({ min: this.props.min, max: this.props.max })
+      }, 500)
+     
+    }); 
   }
 
   // Handles each input change
@@ -137,7 +141,7 @@ export default class FactoryNode extends Component {
       axios.post(`/api/updateRange`, { id, range })
       .then(() => {
         socket.emit('update-server', 'min/max range updated')
-        setTimeout(() =>  { this.setState({ maxReadOnly: true, minReadOnly: true, toggleState: true}) }, 1000)
+        this.setState({ maxReadOnly: true, minReadOnly: true, toggleState: true})
       })
     }
 
@@ -193,7 +197,7 @@ export default class FactoryNode extends Component {
               onBlur={this.handleNameUpdate} 
               onChange={this.handleChange} 
               onClick={this.toggleActionsClassName}
-              value={this.state.toggleState ? this.props.name : this.state.name }   
+              value={this.state.name}   
             />        
             <p className='range-placement'>
               <input 
@@ -204,7 +208,7 @@ export default class FactoryNode extends Component {
                 onDoubleClick={this.handleReadOnly} 
                 onBlur={this.handleRangeSubmit} 
                 onChange={this.handleChange} 
-                value={this.state.toggleState ? this.props.min : this.state.min}
+                value={this.state.min}
               /> 
               {`:`}
               <input 
@@ -215,7 +219,7 @@ export default class FactoryNode extends Component {
                 onDoubleClick={this.handleReadOnly} 
                 onBlur={this.handleRangeSubmit} 
                 onChange={this.handleChange} 
-                value={this.state.toggleState ? this.props.max : this.state.max}
+                value={this.state.max}
               /> 
             </p>
           </p>
