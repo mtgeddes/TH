@@ -29,7 +29,7 @@ export default class FactoryNode extends Component {
       
       setTimeout(() => {
         console.log("check this value here: " + this.props.min)
-        this.setState({ min: this.props.min, max: this.props.max })
+        this.setState({ min: this.props.min, max: this.props.max, name: this.props.name })
       }, 500)
      
     }); 
